@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -22,10 +22,33 @@ import {
   Sparkles,
   Globe,
   Award,
+  Pause,
+  Play,
   Volume2,
+  VolumeX,
   Phone,
   CheckCircle
 } from "lucide-react";
+
+const kawtharAyahs = [
+  {
+    number: 1,
+    arabic: "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ",
+    translation: "Indeed, We have granted you Al-Kawthar.",
+  },
+  {
+    number: 2,
+    arabic: "فَصَلِّ لِرَبِّكَ وَانْحَرْ",
+    translation: "So pray to your Lord and sacrifice [to Him alone].",
+  },
+  {
+    number: 3,
+    arabic: "إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ",
+    translation: "Indeed, your enemy is the one cut off.",
+  },
+];
+
+const kawtharAudioUrl = "/audio/ayah-kawthar.mp3";
 
 // Nav items
 const navItems = [
@@ -223,6 +246,9 @@ export default function Home() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [selectedLang, setSelectedLang] = useState("en");
   const [activePolicy, setActivePolicy] = useState<string | null>(null);
+  const [isAyahPlaying, setIsAyahPlaying] = useState(false);
+  const [isAyahMuted, setIsAyahMuted] = useState(false);
+  const ayahAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const [formData, setFormData] = useState({
     studentName: "",
@@ -246,6 +272,31 @@ export default function Home() {
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
   }, []);
+
+  const toggleAyahPlayback = async () => {
+    if (!ayahAudioRef.current) return;
+
+    if (isAyahPlaying) {
+      ayahAudioRef.current.pause();
+      setIsAyahPlaying(false);
+      return;
+    }
+
+    try {
+      await ayahAudioRef.current.play();
+      setIsAyahPlaying(true);
+    } catch (error) {
+      console.error("Unable to play ayah audio:", error);
+    }
+  };
+
+  const toggleAyahMute = () => {
+    if (!ayahAudioRef.current) return;
+
+    const nextMutedState = !isAyahMuted;
+    ayahAudioRef.current.muted = nextMutedState;
+    setIsAyahMuted(nextMutedState);
+  };
 
   // Filter courses based on category
   const filteredCourses = courseCategory === "All"
@@ -594,7 +645,30 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Audio Wave Mockup */}
+                  <div className="mt-5 rounded-xl border border-amber-400/20 bg-amber-400/5 p-4">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-amber-300">Surah Al-Kawthar • Complete Recitation</p>
+                    <div className="mt-3 space-y-2">
+                      {kawtharAyahs.map((ayah) => (
+                        <div
+                          key={ayah.number}
+                          className="rounded-lg px-3 py-2"
+                        >
+                          <p dir="rtl" className="text-right text-xl leading-loose text-white">
+                            {ayah.arabic} <span className="text-sm text-amber-300">۝{ayah.number}</span>
+                          </p>
+                          <p className="text-xs leading-relaxed text-slate-300">{ayah.translation}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <audio
+                      ref={ayahAudioRef}
+                      src={kawtharAudioUrl}
+                      preload="none"
+                      onEnded={() => setIsAyahPlaying(false)}
+                    />
+                  </div>
+
+                  {/* Quran audio player */}
                   <div className="mt-6 flex items-center justify-center gap-1.5 h-10 bg-slate-950/50 rounded-xl px-4 border border-white/5">
                     {[40, 75, 55, 90, 60, 30, 85, 100, 70, 45, 80, 60, 95, 50, 65, 35].map((h, i) => (
                       <motion.div
@@ -604,6 +678,25 @@ export default function Home() {
                         className="w-1.5 bg-gradient-to-t from-emerald-500 to-amber-400 rounded-full"
                       />
                     ))}
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={toggleAyahPlayback}
+                      className="flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-3 py-2.5 text-xs font-bold text-white transition hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+                    >
+                      {isAyahPlaying ? <Pause size={15} /> : <Play size={15} />}
+                      <span>{isAyahPlaying ? "Pause Ayah" : "Play Ayah"}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={toggleAyahMute}
+                      aria-label={isAyahMuted ? "Unmute ayah" : "Mute ayah"}
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-200 transition hover:border-amber-400/50 hover:text-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+                    >
+                      {isAyahMuted ? <VolumeX size={17} /> : <Volume2 size={17} />}
+                    </button>
                   </div>
 
                   <div className="mt-6 grid grid-cols-2 gap-3">
