@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -182,6 +182,29 @@ const faqs = [
   { question: "How long is each class session?", answer: "Class durations are flexible (choose between 30-minute or 45-minute sessions), customized according to the student's age, attention span, and plan." },
 ];
 
+const policyDetails = [
+  {
+    title: "Attendance & Punctuality Policy",
+    body: "Students should join each class on time and be ready with their Quran and learning materials. Consistent attendance helps students maintain progress and build a strong learning routine.",
+  },
+  {
+    title: "Missed Class & Rescheduling",
+    body: "If a student cannot attend a scheduled class, please inform the academy as early as possible. We will work with the student or family to arrange a suitable alternative time when available.",
+  },
+  {
+    title: "Makeup Class Policy",
+    body: "Makeup classes may be arranged for approved absences, subject to teacher availability. Families should coordinate with the academy team to confirm the new class time.",
+  },
+  {
+    title: "Family Discount Fee Policy",
+    body: "Families enrolling multiple students may be eligible for a family discount. Please contact the academy to discuss the available fee plan for your household.",
+  },
+  {
+    title: "Ramadan Schedule Policy",
+    body: "Class timings can be adjusted during Ramadan to suit the student and family schedule. Contact the academy in advance so we can help arrange the most convenient timing.",
+  },
+];
+
 // 6-step learning workflow
 const steps = [
   { step: "01", title: "Student Assessment", desc: "Evaluate student level, age, and individual learning goals during the 3-day free trial." },
@@ -199,6 +222,7 @@ export default function Home() {
   const [activeDemoTab, setActiveDemoTab] = useState<string>("tajweed");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [selectedLang, setSelectedLang] = useState("en");
+  const [activePolicy, setActivePolicy] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     studentName: "",
@@ -213,6 +237,15 @@ export default function Home() {
     notes: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActivePolicy(null);
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, []);
 
   // Filter courses based on category
   const filteredCourses = courseCategory === "All"
@@ -630,11 +663,19 @@ export default function Home() {
               </div>
 
               <h2 className="mt-4 text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl leading-tight">
-                Professional Online Quran Learning with Integrity, Care, and Excellence.
+                Quran Education for Every Age and Learning Level.
               </h2>
 
               <p className="mt-6 text-base sm:text-lg leading-relaxed text-slate-300">
-                We are a professional online Quran learning institute dedicated to spreading the light of Quranic education across the world. Our educators foster understanding, confidence, and Islamic values while nurturing each student’s growth at every stage.
+                At <span className="font-semibold text-white">Safi Quran Academy</span>, we are committed to providing high-quality online Quran education for children, adults, brothers, and sisters. Our experienced teachers help students learn the Quran with proper Tajweed, understanding, confidence, and Islamic values from the comfort of their homes.
+              </p>
+
+              <p className="mt-4 text-base leading-relaxed text-slate-300">
+                Our goal is not only to teach students how to read the Quran, but also to help them understand Islamic teachings, improve their character, strengthen their faith, and develop a lifelong connection with the Holy Quran.
+              </p>
+
+              <p className="mt-4 text-base leading-relaxed text-slate-300">
+                Whether you are a complete beginner, an adult learner, or someone looking to improve Tajweed and memorization, our structured courses are designed for every age and learning level.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4 text-sm font-semibold text-slate-300">
@@ -663,9 +704,9 @@ export default function Home() {
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-400/10 text-amber-400 border border-amber-400/20 mb-5">
                   <Award size={24} />
                 </div>
-                <h3 className="text-xl font-bold text-white">Our Mission</h3>
+                <h3 className="text-xl font-bold text-white">What Makes Us Different?</h3>
                 <p className="mt-3 text-sm text-slate-300 leading-relaxed">
-                  Accessible, affordable, and high-quality Quran education that maintains excellence in teaching, Islamic values, and overall student development.
+                  We believe that every student learns differently. Our teachers create customized lesson plans according to each student&apos;s age, level, goals, and learning pace.
                 </p>
               </motion.div>
 
@@ -680,9 +721,9 @@ export default function Home() {
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-400/10 text-emerald-400 border border-emerald-400/20 mb-5">
                   <Globe size={24} />
                 </div>
-                <h3 className="text-xl font-bold text-white">Our Vision</h3>
+                <h3 className="text-xl font-bold text-white">A Lifelong Connection</h3>
                 <p className="mt-3 text-sm text-slate-300 leading-relaxed">
-                  To become one of the most trusted online Quran academies worldwide by providing outstanding Quran education and a supportive environment.
+                  We nurture understanding, confidence, strong character, and faith so every student can build a lasting relationship with the Holy Quran.
                 </p>
               </motion.div>
             </div>
@@ -1354,11 +1395,16 @@ export default function Home() {
             <div>
               <h4 className="text-sm font-bold text-white uppercase tracking-wider">Academy Policies</h4>
               <div className="mt-4 space-y-2 text-xs text-slate-400 font-medium">
-                <p>Attendance & Punctuality Policy</p>
-                <p>Missed Class & Rescheduling</p>
-                <p>Makeup Class Policy</p>
-                <p>Family Discount Fee Policy</p>
-                <p>Ramadan Schedule Policy</p>
+                {policyDetails.map((policy) => (
+                  <button
+                    key={policy.title}
+                    type="button"
+                    onClick={() => setActivePolicy(policy.title)}
+                    className="block text-left transition hover:text-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070C1B]"
+                  >
+                    {policy.title}
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -1369,6 +1415,39 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {activePolicy && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/80 px-4 backdrop-blur-sm"
+          role="presentation"
+          onClick={() => setActivePolicy(null)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="policy-modal-title"
+            className="w-full max-w-lg rounded-3xl border border-amber-400/30 bg-[#0B132B] p-6 text-slate-100 shadow-2xl shadow-black/50 sm:p-8"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-5">
+              <h2 id="policy-modal-title" className="text-xl font-bold text-white sm:text-2xl">
+                {activePolicy}
+              </h2>
+              <button
+                type="button"
+                onClick={() => setActivePolicy(null)}
+                aria-label="Close policy dialog"
+                className="rounded-full p-1.5 text-slate-400 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <p className="mt-5 text-sm leading-relaxed text-slate-300">
+              {policyDetails.find((policy) => policy.title === activePolicy)?.body}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* ================= FLOATING ACTION BUTTONS ================= */}
       {/* WhatsApp Floating Button with double pulsing aura */}
