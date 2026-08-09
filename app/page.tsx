@@ -1482,7 +1482,7 @@ export default function Home() {
                 <span className="text-xl font-extrabold text-white tracking-tight">Safi Quran Academy</span>
               </div>
               <p className="mt-4 max-w-md text-xs sm:text-sm leading-relaxed text-slate-400">
-                Providing high-quality online Quran education for kids and adults worldwide through 1-on-1 interactive live sessions with certified tutors.
+                Providing high-quality online Quran education for kids and adults worldwide through 1-on-1 interactive live sessions with certified tutors. Learn with confidence from home.
               </p>
               <div className="mt-5 space-y-1.5 text-xs text-slate-300 font-medium">
                 <p>WhatsApp: 0314 1899657 | 0323 9847638</p>
