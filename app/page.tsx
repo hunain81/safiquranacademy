@@ -17,7 +17,6 @@ import {
   ShieldCheck,
   Star,
   Users,
-  MessageCircleMore,
   ChevronDown,
   Sparkles,
   Globe,
@@ -1570,7 +1569,13 @@ export default function Home() {
           className="relative flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-2xl shadow-emerald-500/50 border border-emerald-400"
         >
           <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-          <MessageCircleMore size={28} className="relative z-10" />
+          <Image
+            src="/logo2.png"
+            alt="WhatsApp"
+            width={34}
+            height={34}
+            className="relative z-10 rounded-full object-contain"
+          />
         </motion.a>
 
         {/* Mobile floating quick book button */}
