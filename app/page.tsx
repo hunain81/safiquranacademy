@@ -1362,9 +1362,9 @@ export default function Home() {
       {/* ================= FOOTER ================= */}
       <footer className="bg-[#070C1B] py-16 text-slate-400 border-t border-slate-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
+          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
             
-            <div>
+            <div className="min-w-0 md:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-400/20 text-amber-400 border border-amber-400/30">
                   <BookOpen size={20} />
@@ -1381,7 +1381,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <h4 className="text-sm font-bold text-white uppercase tracking-wider">Social & Admin</h4>
               <div className="mt-4 space-y-2 text-xs font-semibold">
                 <a className="block text-slate-400 hover:text-amber-300 transition" href="https://wa.me/923141899657">WhatsApp: 0314 1899657</a>
@@ -1392,7 +1392,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <h4 className="text-sm font-bold text-white uppercase tracking-wider">Academy Policies</h4>
               <div className="mt-4 space-y-2 text-xs text-slate-400 font-medium">
                 {policyDetails.map((policy) => (
@@ -1400,7 +1400,7 @@ export default function Home() {
                     key={policy.title}
                     type="button"
                     onClick={() => setActivePolicy(policy.title)}
-                    className="block text-left transition hover:text-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070C1B]"
+                    className="block w-full text-left transition hover:text-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070C1B]"
                   >
                     {policy.title}
                   </button>
