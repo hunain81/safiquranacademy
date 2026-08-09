@@ -784,7 +784,7 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Mission & Vision Cards */}
+            {/* Mission, difference, and lifelong connection cards */}
             <div className="grid gap-5 sm:grid-cols-2">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -797,9 +797,9 @@ export default function Home() {
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-400/10 text-amber-400 border border-amber-400/20 mb-5">
                   <Award size={24} />
                 </div>
-                <h3 className="text-xl font-bold text-white">What Makes Us Different?</h3>
+                <h3 className="text-xl font-bold text-white">Our Mission</h3>
                 <p className="mt-3 text-sm text-slate-300 leading-relaxed">
-                  We believe that every student learns differently. Our teachers create customized lesson plans according to each student&apos;s age, level, goals, and learning pace.
+                  Accessible, affordable, and high-quality Quran education that maintains excellence in teaching, Islamic values, and overall student development.
                 </p>
               </motion.div>
 
@@ -817,6 +817,23 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-white">A Lifelong Connection</h3>
                 <p className="mt-3 text-sm text-slate-300 leading-relaxed">
                   We nurture understanding, confidence, strong character, and faith so every student can build a lasting relationship with the Holy Quran.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className="rounded-3xl border border-slate-800 bg-gradient-to-b from-slate-800/80 to-slate-900 p-7 shadow-xl hover:border-amber-400/40 transition-all sm:col-span-2"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-400/10 text-amber-400 border border-amber-400/20 mb-5">
+                  <Users size={24} />
+                </div>
+                <h3 className="text-xl font-bold text-white">What Makes Us Different?</h3>
+                <p className="mt-3 text-sm text-slate-300 leading-relaxed">
+                  We believe that every student learns differently. Our teachers create customized lesson plans according to each student&apos;s age, level, goals, and learning pace.
                 </p>
               </motion.div>
             </div>
@@ -1469,7 +1486,7 @@ export default function Home() {
               </p>
               <div className="mt-5 space-y-1.5 text-xs text-slate-300 font-medium">
                 <p>WhatsApp: 0314 1899657 | 0323 9847638</p>
-                <p>Email: safiquranacademy@gmail.com</p>
+                <p>Email: safiquranaacademy@gmail.com</p>
                 <p>Website: www.safiquranacademy.com</p>
               </div>
             </div>
